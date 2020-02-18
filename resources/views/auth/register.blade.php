@@ -38,6 +38,45 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="rank" class="col-md-4 col-form-label text-md-right">{{ __('Rank') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="rank" type="text" class="form-control @error('rank') is-invalid @enderror" name="rank" value="{{ old('rank') }}" required autocomplete="rank">
+
+                                @error('rank')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="division" class="col-md-4 col-form-label text-md-right">{{ __('Division') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="division" type="text" class="form-control @error('division') is-invalid @enderror" name="division" value="{{ old('division') }}" required autocomplete="division">
+
+                                @error('division')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="extension" class="col-md-4 col-form-label text-md-right">{{ __('Extension') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="extension" type="text" class="form-control @error('extension') is-invalid @enderror" name="extension" value="{{ old('extension') }}" required autocomplete="extension">
+
+                                @error('extension')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>

@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>RequiSys</title>
+    <title>Admin-RequiSys</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,7 +46,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-            <a class="nav-link" href="{{ url('/') }}">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -55,7 +55,7 @@
             <hr class="sidebar-divider">
             @if(Auth::user()->rank == "Director")
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('/pending') }}">
+                <a class="nav-link" href="./pending">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Pending Requests</span></a>
             </li>
@@ -79,10 +79,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">List of tables</h6>
-                        <a class="collapse-item" href="{{ url('/request/files') }}">Files</a>
-                        <a class="collapse-item" href="{{ url('/request/water') }}">Water</a>
-                        <a class="collapse-item" href="{{ url('/request/vehicle') }}">Vehicle</a>
-                        <a class="collapse-item" href="{{ url('/request/order') }}">Work Order</a>
+                        <a class="collapse-item" href="./request/files">Files</a>
+                        <a class="collapse-item" href="./request/water">Water</a>
+                        <a class="collapse-item" href="./request/vehicle">Vehicle</a>
+                        <a class="collapse-item" href="./request/order">Work Order</a>
                     </div>
                 </div>
             </li>

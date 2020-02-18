@@ -19,7 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedInteger('staff_id');
+            $table->string('rank');
+            $table->string('division');
+            $table->integer('extension');
             $table->rememberToken();
             $table->timestamps();
         });

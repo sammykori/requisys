@@ -13,8 +13,8 @@ class Record extends Model
     public $timestamps = true;
 
 
-    public function staffs(){
-        return $this->belongsTo('App\Staff', 'staff_id');
+    public function users(){
+        return $this->belongsTo('App\User');
     }
     public function files(){
         return $this->belongsTo('App\File', 'file_id');

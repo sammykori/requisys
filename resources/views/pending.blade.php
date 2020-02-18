@@ -5,13 +5,13 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Requests for Files</h1>
+          <h1 class="h3 mb-2 text-gray-800">Pending Requests</h1>
           <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
           @include('inc.messages')
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">File Requests Table</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Pending Requests Table</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -19,38 +19,35 @@
                   <thead>
                     <tr>
                       <th>Request ID</th>
-                      <th>File ID</th>
+                      <th>Requestor</th>
+                      <th>Request type</th>
                       <th>Date & Time</th>
-                      <th>Status</th>
-                      <th>Edit</th>
-                      <th>Delete</th>
+                      <th>More Info</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>Request ID</th>
-                      <th>File ID</th>
-                      <th>Date & Time</th>
-                      <th>Status</th>
-                      <th>Edit</th>
-                      <th>Delete</th>
+                        <th>Request ID</th>
+                        <th>Requestor</th>
+                        <th>Request type</th>
+                        <th>Date & Time</th>
+                        <th>More Info</th>
                     </tr>
                   </tfoot>
-                  @if(count($staffs) >= 1)
-                    @foreach($staffs as $staff)
+                  @if(count($pending) >= 1)
+                    @foreach($pending as $pending)
                       <tbody>
                         <tr>
-                        <td>{{$staff->id}}</td>
-                          <td>{{$staff->file_name}}</td>
-                          <td>{{$staff->created_at}}</td>
-                          <td>{{$staff->status}}</td>
-                          <td><button class="btn btn-info">Edit</button></td>
-                          <td><button class="btn btn-danger">Delete</button></td>
+                        <td>{{$pending->id}}</td>
+                          <td>{{$pending->user_id}}</td>
+                          <td>file</td>
+                          <td>{{$pending->created_at}}</td>
+                          <td><button class="btn btn-info">View</button></td>
                         </tr>
                       </tbody>
                     @endforeach
                   @else 
-                    <h3>No File Request Found</h3>
+                    <div class="alert alert-info">No File Request Found</div>
                   @endif
                 </table>
               </div>
@@ -60,4 +57,3 @@
         </div>
         <!-- /.container-fluid -->
 @endsection
-

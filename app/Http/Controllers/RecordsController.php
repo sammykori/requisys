@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Record;
 
 class RecordsController extends Controller
@@ -12,10 +13,22 @@ class RecordsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
-        return $records = Record::find(1);
-        return('request');
+        $user_id = auth()->user()->id;
+        $staffs =DB::table('records')
+        ->join('files', 'records.file_id', '=', 'files.file_id')
+        ->join('users', 'records.user_id', '=', 'users.id')
+        ->select('records.id','records.status','records.created_at','files.file_name', 'users.id')
+        ->where('users.id', $user_id)
+        ->get();
+
+        return view('request')->with('staffs', $staffs);
     }
 
     /**
@@ -39,15 +52,15 @@ class RecordsController extends Controller
         $this->validate($request, [
             'file' => 'required',
             'purpose' => 'required',
-            'superior' => 'required'
+            'sup' => 'required'
         ]);
 
         //create
         $record = new Record;
         $record->file_id = 1;
         $record->purpose = $request->input('purpose');
-        $record->staff_id = 4;
-        $record->sup_id = 2;
+        $record->user_id = auth()->user()->id;
+        $record->sup_id = $request->input('sup');
         $record->status = 'pending';
         $record->save();
 

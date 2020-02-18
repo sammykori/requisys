@@ -11,15 +11,24 @@
 |
 */
 
-Route::get('/dashboard', 'PagesController@index');
-Route::get('/request/files', 'StaffsController@index');
+
+
 Route::get('/record', 'PagesController@record');
 Route::get('/water', 'PagesController@water');
 Route::get('/vehicle', 'PagesController@vehicle');
+Route::get('/pending', 'PagesController@pending');
+
+Route::get('/request/files', 'RecordsController@index');
 
 Route::resource('records', 'RecordsController');
 
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'DashboardController@index');
+
+Route::prefix('admin')->group(function(){
+    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit'); 
+    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login'); 
+    Route::get('/', 'AdminController@index')->name('admin.dashboard');
+});
