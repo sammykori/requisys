@@ -22,6 +22,8 @@ Route::get('/request/files', 'RecordsController@index');
 
 Route::resource('records', 'RecordsController');
 
+Route::post('/updaterecords','RecordsController@update');
+
 
 Auth::routes();
 

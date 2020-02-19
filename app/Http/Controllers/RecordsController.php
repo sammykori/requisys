@@ -25,7 +25,7 @@ class RecordsController extends Controller
         $staffs =DB::table('records')
         ->join('files', 'records.file_id', '=', 'files.file_id')
         ->join('users', 'records.user_id', '=', 'users.id')
-        ->select('records.id','records.status','records.created_at','files.file_name')
+        ->select('records.id','records.status','records.created_at','purpose','name','files.file_name')
         ->where('users.id', $user_id)
         ->get();
 
@@ -99,9 +99,15 @@ class RecordsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+
+        //write your update statement to update the database with the new information.
+
+        return response()->json([
+            "data" => "Record updated successfully"
+        ], 200);
     }
 
     /**

@@ -37,14 +37,14 @@
                     </tr>
                   </tfoot>
                   @if(count($staffs) >= 1)
-                    @foreach($staffs as $staff)
-                      <tbody>
+                      <tbody id="stafftable">
+                         @foreach($staffs as $staff)
                         <tr>
                         <td>{{$staff->id}}</td>
                           <td>{{$staff->file_name}}</td>
                           <td>{{$staff->created_at}}</td>
                           <td>{{$staff->status}}</td>
-                        <td><button id = "{{$staff->id}}" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Edit</button></td>
+                        <td><button data-request="{{json_encode($staff)}}" class="btn btn-info stfbtn" data-toggle="modal" data-target=".bd-example-modal-lg">Edit</button></td>
                           <td>
                             {!!Form::open(['action' =>['RecordsController@destroy', $staff->id], 'method' => 'POST'])!!}
                               {{Form::hidden('_method', 'DELETE')}}
@@ -52,8 +52,9 @@
                             {!!Form::close()!!}
                           </td>
                         </tr>
+                         @endforeach
                       </tbody>
-                    @endforeach
+                   
                   @else 
                     <h3>No File Request Found</h3>
                   @endif
@@ -75,7 +76,8 @@
                 <div class="modal-body">
                   @include('inc.messages')
                   <p>Find File</p>
-                  {{-- {!! Form::open(['action' => ['RecordsController@update', $staff->id], 'method'=> 'POST']) !!} --}}
+                  <form class="updateform">
+                  <meta name="_token" content="{{csrf_token()}}">
                   <div class="form-group row">
                     <div class="col-sm-10">
                       {{Form::text('file', '', ['class' => 'form-control dropdown-toggle', 'id' => 'searchFile', 'placeholder' => 'Search for file', 'autocomplete' => 'off', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'false', 'aria-expanded' => 'false', 'onkeyup' => 'fileFetch()'])}}
@@ -92,7 +94,7 @@
                   <div class="form-group row">
                     <div class="col-sm-10">
                       {{Form::text('purpose', '', ['class' => 'form-control', 'id' => 'purpose', 'placeholder' => 'Purpose'])}}
-                      {{-- <input type="text" class="form-control" id="purpose" placeholder="Purpose"> --}}
+                      <input type="hidden" class="form-control" id="record_id" name="record_id">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -112,11 +114,10 @@
                   <br>
                   <br>
                   <div class="form-group">
-                      {{Form::submit('Save Changes', ['class' => 'btn btn-primary'])}}
-                      {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                      <button type="button" class="btn btn-primary savechangesbtn">Save changes</button>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                
-                    {!! Form::close() !!}
                   </div>
+                </form>
             </div>
           </div>
         </div>
