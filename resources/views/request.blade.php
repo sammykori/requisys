@@ -75,7 +75,7 @@
                 <div class="modal-body">
                   @include('inc.messages')
                   <p>Find File</p>
-                  {!! Form::open(['action' => ['RecordsController@update', $staff->id], 'method'=> 'POST']) !!}
+                  {{-- {!! Form::open(['action' => ['RecordsController@update', $staff->id], 'method'=> 'POST']) !!} --}}
                   <div class="form-group row">
                     <div class="col-sm-10">
                       {{Form::text('file', '', ['class' => 'form-control dropdown-toggle', 'id' => 'searchFile', 'placeholder' => 'Search for file', 'autocomplete' => 'off', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'false', 'aria-expanded' => 'false', 'onkeyup' => 'fileFetch()'])}}
