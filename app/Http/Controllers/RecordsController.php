@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Record;
+use App\File;
 
 class RecordsController extends Controller
 {
@@ -24,7 +25,7 @@ class RecordsController extends Controller
         $staffs =DB::table('records')
         ->join('files', 'records.file_id', '=', 'files.file_id')
         ->join('users', 'records.user_id', '=', 'users.id')
-        ->select('records.id','records.status','records.created_at','files.file_name', 'users.id')
+        ->select('records.id','records.status','records.created_at','files.file_name')
         ->where('users.id', $user_id)
         ->get();
 
@@ -54,10 +55,11 @@ class RecordsController extends Controller
             'purpose' => 'required',
             'sup' => 'required'
         ]);
-
+        $file_name = $request->input('file');
+        $file_id = File::where('file_name', $file_name)->pluck('file_id');
         //create
         $record = new Record;
-        $record->file_id = 1;
+        $record->file_id = $file_id[0];
         $record->purpose = $request->input('purpose');
         $record->user_id = auth()->user()->id;
         $record->sup_id = $request->input('sup');
@@ -87,7 +89,7 @@ class RecordsController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -110,6 +112,8 @@ class RecordsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $record = Record::find($id);
+        $record->delete();
+        return redirect('request/files')->with('success', 'Record Deleted Successfully');
     }
 }

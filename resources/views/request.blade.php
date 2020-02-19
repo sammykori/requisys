@@ -44,8 +44,13 @@
                           <td>{{$staff->file_name}}</td>
                           <td>{{$staff->created_at}}</td>
                           <td>{{$staff->status}}</td>
-                          <td><button class="btn btn-info">Edit</button></td>
-                          <td><button class="btn btn-danger">Delete</button></td>
+                        <td><button id = "{{$staff->id}}" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg">Edit</button></td>
+                          <td>
+                            {!!Form::open(['action' =>['RecordsController@destroy', $staff->id], 'method' => 'POST'])!!}
+                              {{Form::hidden('_method', 'DELETE')}}
+                              {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                            {!!Form::close()!!}
+                          </td>
                         </tr>
                       </tbody>
                     @endforeach
@@ -56,6 +61,66 @@
               </div>
             </div>
           </div>
+          {{-- MODAL eDIT? --}}
+
+          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Edit File Record</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  @include('inc.messages')
+                  <p>Find File</p>
+                  {!! Form::open(['action' => ['RecordsController@update', $staff->id], 'method'=> 'POST']) !!}
+                  <div class="form-group row">
+                    <div class="col-sm-10">
+                      {{Form::text('file', '', ['class' => 'form-control dropdown-toggle', 'id' => 'searchFile', 'placeholder' => 'Search for file', 'autocomplete' => 'off', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'false', 'aria-expanded' => 'false', 'onkeyup' => 'fileFetch()'])}}
+                      {{-- <input type="text" class="form-control" id="searchFile" placeholder="Search for File"> --}}
+                      <div class="dropdown-menu col-sm-11 drops">
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <hr>
+                  <br>
+                  <p>Requisition Details</p>
+                  <div class="form-group row">
+                    <div class="col-sm-10">
+                      {{Form::text('purpose', '', ['class' => 'form-control', 'id' => 'purpose', 'placeholder' => 'Purpose'])}}
+                      {{-- <input type="text" class="form-control" id="purpose" placeholder="Purpose"> --}}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-10">
+
+                      {{-- {{Form::select('sup', $sup->pluck('name', 'id'), null, ['placeholder' => 'Select Division Head to approve', 'class' => 'custom-select form-control'])}} --}}
+                        {{-- <select class="custom-select form-control">
+                            <option selected>Select Superior to Approve</option>
+                            <option value="1">Paul Datsa</option>
+                            <option value="2">Golda Adjei</option>
+                            <option value="3">Isaac Boateng</option>
+                        </select> --}}
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <br>
+                  <br>
+                  <div class="form-group">
+                      {{Form::submit('Save Changes', ['class' => 'btn btn-primary'])}}
+                      {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                
+                    {!! Form::close() !!}
+                  </div>
+            </div>
+          </div>
+        </div>
+        <br/><br/>
 
         </div>
         <!-- /.container-fluid -->

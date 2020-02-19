@@ -63,7 +63,6 @@
                         {{Form::submit('Save Changes', ['class' => 'btn btn-primary'])}}
                         {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input type="text" id="mySelect" onkeyup="fileFetch()">
                     </div>
                 {{-- </div> --}}
                 {!! Form::close() !!} 
@@ -103,7 +102,7 @@
               });
             }
             function select(el){
-              console.log(el.innerText);
+              document.getElementById("searchFile").value = el.innerText;
             }
           </script>
       </div>

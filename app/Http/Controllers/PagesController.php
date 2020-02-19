@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Record;
 use App\User;
 use App\File;
@@ -27,7 +28,13 @@ class PagesController extends Controller
     }
     public function pending(){
         // $id = auth()->user()->id;
-        $pending = Record::where('status', 'pending')->get();
+        $div = auth()->user()->division;
+        $pending = DB::table('records')
+        ->join('files', 'records.file_id', '=', 'files.file_id')
+        ->join('users', 'records.user_id', '=', 'users.id')
+        ->select('users.name', 'users.rank', 'users.email', 'users.extension', 'files.file_name', 'files.company', 'files.service_type','records.id','records.status','records.created_at','records.purpose',)
+        ->where('users.division', $div)
+        ->get();
         if(auth()->user()->rank !== "Director"){
             return redirect('/dashboard')->with('error', 'Unauthorised page');
         }
