@@ -18,7 +18,7 @@
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
                           <h5 class="card-title">Water</h5>
-                          <p class="card-text">Request for water from the Adminstration Division</p>
+                          <p class="card-text">Request for water from the Administration Division</p>
                           <a href="./water" class="btn btn-primary">Request</a>
                         </div>
                       </div>
@@ -39,7 +39,7 @@
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                       <h5 class="card-title">Petty Cash</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                      <p class="card-text">Request for Petty Cash from Finance Division</p>
                       <a href="#" class="btn btn-primary">Request</a>
                     </div>
                   </div>
@@ -48,7 +48,7 @@
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
                           <h5 class="card-title">Purchase</h5>
-                          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                          <p class="card-text">Request for purchase of goods and stationary at the Procurement Unit</p>
                           <a href="#" class="btn btn-primary">Request</a>
                         </div>
                       </div>
@@ -57,7 +57,7 @@
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
                           <h5 class="card-title">Work Order</h5>
-                          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                          <p class="card-text">Request for Work Order</p>
                           <a href="#" class="btn btn-primary">Request</a>
                         </div>
                       </div>

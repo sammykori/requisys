@@ -40,4 +40,27 @@ class PagesController extends Controller
         }
         return view('/pending')->with('pending', $pending);
     }
+
+    public function updateStatus(Request $request){
+        $rec = Record::where('id', $request->record_id)->update([
+            "status" => "approved"
+        ]);
+
+     
+        return response()->json([
+            "data" => "Status changed to approve"
+        ], 200);
+    }
+
+
+    public function disapproveStatus(Request $request){
+        $rec = Record::where('id', $request->record_id)->update([
+            "status" => "disapproved"
+        ]);
+
+     
+        return response()->json([
+            "data" => "Status changed to Disapproved"
+        ], 200);
+    }
 }

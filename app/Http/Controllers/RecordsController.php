@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Record;
 use App\File;
+use App\User;
 
 class RecordsController extends Controller
 {
@@ -27,9 +28,15 @@ class RecordsController extends Controller
         ->join('users', 'records.user_id', '=', 'users.id')
         ->select('records.id','records.status','records.created_at','purpose','name','files.file_name')
         ->where('users.id', $user_id)
+        ->orderBy('records.created_at')
         ->get();
 
-        return view('request')->with('staffs', $staffs);
+        $div = auth()->user()->division;
+        $sup = User::where('division', $div)->where('rank', 'Director')->get(['id','name']);
+        $files = File::all()->pluck('file_id','file_name');
+       
+
+        return view('request')->with('staffs', $staffs)->with('files', $files);
     }
 
     /**
@@ -102,11 +109,15 @@ class RecordsController extends Controller
     public function update(Request $request)
     {
 
-
         //write your update statement to update the database with the new information.
-
+        Record::where('id', $request->record_id)
+        ->update([
+            "purpose" => $request->purpose,
+            "file_id" => $request->file_id
+        ]);
+        
         return response()->json([
-            "data" => "Record updated successfully"
+            "data" => "record updated successfully",
         ], 200);
     }
 

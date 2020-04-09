@@ -79,6 +79,7 @@
               // console.log(x);
               var matchArray;
               files = <?= $files ?>;
+              
               // console.log(files);
               matchArray = findMatches(x, files);
               // console.log(matchArray);

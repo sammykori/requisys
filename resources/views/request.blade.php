@@ -18,20 +18,20 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Request ID</th>
-                      <th>File ID</th>
+                      <th>File name</th>
                       <th>Date & Time</th>
                       <th>Status</th>
+                      <th>Purpose</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>Request ID</th>
-                      <th>File ID</th>
+                      <th>File name</th>
                       <th>Date & Time</th>
                       <th>Status</th>
+                      <th>Purpose</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
@@ -40,10 +40,10 @@
                       <tbody id="stafftable">
                          @foreach($staffs as $staff)
                         <tr>
-                        <td>{{$staff->id}}</td>
                           <td>{{$staff->file_name}}</td>
                           <td>{{$staff->created_at}}</td>
-                          <td>{{$staff->status}}</td>
+                          <td>{{strtoupper($staff->status)}}</td>
+                        <td>{{$staff->purpose}}</td>
                         <td><button data-request="{{json_encode($staff)}}" class="btn btn-info stfbtn" data-toggle="modal" data-target=".bd-example-modal-lg">Edit</button></td>
                           <td>
                             {!!Form::open(['action' =>['RecordsController@destroy', $staff->id], 'method' => 'POST'])!!}
@@ -74,14 +74,14 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  @include('inc.messages')
-                  <p>Find File</p>
+                  {{-- @include('inc.messages') --}}
+                  <em><h5 id="currentfile">Find File</h5></em>
                   <form class="updateform">
                   <meta name="_token" content="{{csrf_token()}}">
                   <div class="form-group row">
                     <div class="col-sm-10">
-                      {{Form::text('file', '', ['class' => 'form-control dropdown-toggle', 'id' => 'searchFile', 'placeholder' => 'Search for file', 'autocomplete' => 'off', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'false', 'aria-expanded' => 'false', 'onkeyup' => 'fileFetch()'])}}
-                      {{-- <input type="text" class="form-control" id="searchFile" placeholder="Search for File"> --}}
+                      {{Form::text('file', '', ['class' => 'form-control dropdown-toggle', 'id' => 'searchFile', 'placeholder' => 'Search for file', 'autocomplete' => 'off', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'false', 'aria-expanded' => 'false', 'onkeyup' => 'fileFetch()'])}}                  
+                      <input type="hidden" name="file_id" id="searchfileid" value="">
                       <div class="dropdown-menu col-sm-11 drops">
                         
                       </div>
@@ -122,7 +122,53 @@
           </div>
         </div>
         <br/><br/>
+        <script>
+          var files = [];
+          var a_files = [];
+          var files_id = [];
+          a_files = <?= $files ?>;
 
+          for (key in a_files){
+              var k_id = a_files[key];
+              files.push(key);
+              files_id.push(k_id);
+            }
+
+          const drops = document.querySelector('.drops')
+          function fileFetch(){
+            
+            var x = document.getElementById("searchFile").value;
+            // console.log(x);
+            var matchArray;  
+          
+            console.log(files);
+            matchArray = findMatches(x, files);
+            // console.log(matchArray);
+            const html = matchArray.map(file => {
+              const regex = new RegExp(x, 'gi')
+              // console.log("reg "+regex)
+              const files = file.replace(regex, `${x}`)
+              // console.log("file "+files)
+              return `
+                      <a class="dropdown-item" onclick = "select(this)">${files}</a>
+                      <div class="dropdown-divider"></div>
+              `;
+              
+            }).join('');
+            drops.innerHTML = html
+          };
+          function findMatches(wordToMatch, cities) {
+            return files.filter(file => {
+                const regex = new RegExp(wordToMatch, 'gi')
+                return file.match(regex)
+            });
+          }
+          function select(el){
+            document.getElementById("searchFile").value = el.innerText;
+            document.getElementById("searchfileid").value = a_files[el.innerText];
+            document.getElementById("currentfile").textContent = "Selected file " + el.innerText;
+          }
+        </script>
         </div>
         <!-- /.container-fluid -->
 @endsection

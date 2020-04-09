@@ -25,6 +25,10 @@ Route::resource('records', 'RecordsController');
 Route::post('/updaterecords','RecordsController@update');
 
 
+Route::post('/updateapprovalstatus', 'PagesController@updateStatus');
+Route::post('/disapprovalstatus', 'PagesController@disapproveStatus');
+
+
 Auth::routes();
 
 Route::get('/', 'DashboardController@index');
